@@ -19,3 +19,49 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+/* Onibus */
+
+Route.resource('onibus', 'BussController').apiOnly()
+
+/* Localização do ônibus */
+
+Route.post('/onibus/localizacao', () => {
+  return { greeting: 'Localizacao' }
+})
+
+Route.get('/onibus/:id/localizacao', () => {
+  return { greeting: 'Localizacao' }
+})
+
+/* Pontos */
+
+Route.get('/pontos', () => {
+  return { greeting: 'Pontos' }
+})
+
+Route.post('/pontos', () => {
+  return { greeting: 'Pontos' }
+})
+
+Route.delete('/pontos/:id', () => {
+  return { greeting: 'Pontos' }
+})
+
+/* Rotas */
+
+Route.get('/rotas', () => {
+  return { greeting: 'Rotas' }
+})
+
+Route.post('/rotas', () => {
+  return { greeting: 'Rotas' }
+})
+
+Route.put('/rotas', () => {
+  return { greeting: 'Rotas' }
+})
+
+Route.delete('/rotas/:id', () => {
+  return { greeting: 'Rotas' }
+})

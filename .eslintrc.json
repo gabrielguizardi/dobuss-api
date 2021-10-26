@@ -1,18 +1,15 @@
 {
-    "env": {
-        "commonjs": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "standard"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 13
-    },
-    "rules": {
-    },
-    "globals": {
-        "use": true
-    }
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["standard"],
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "rules": {},
+  "globals": {
+    "use": true
+  }
 }
