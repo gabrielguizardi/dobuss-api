@@ -7,7 +7,7 @@
 /**
  * Resourceful controller for interacting with busses
  */
-const Buss = use('App/Models/Project')
+const Buss = use('App/Models/Buss')
 
 class BussController {
   /**
@@ -63,6 +63,9 @@ class BussController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const buss = await Buss.findOrFail(params.id)
+
+    return buss
   }
 
   /**

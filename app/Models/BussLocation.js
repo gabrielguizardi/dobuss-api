@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class BussLocation extends Model {
+  buss () {
+    return this.belongsTo('App/Model/Buss')
+  }
 }
 
 module.exports = BussLocation

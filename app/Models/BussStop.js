@@ -4,6 +4,13 @@
 const Model = use('Model')
 
 class BussStop extends Model {
+  bussLocations () {
+    this.hasMany('App/Model/BussLocation')
+  }
+
+  routes () {
+    this.hasMany('App/Model/Routes')
+  }
 }
 
 module.exports = BussStop

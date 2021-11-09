@@ -7,6 +7,7 @@
 /**
  * Resourceful controller for interacting with busslocations
  */
+const BussLocation = use('App/Models/BussLocation')
 class BussLocationController {
   /**
    * Show a list of all busslocations.
@@ -18,6 +19,9 @@ class BussLocationController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const bussLocation = await BussLocation.all()
+
+    return bussLocation
   }
 
   /**
@@ -41,6 +45,11 @@ class BussLocationController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.only(['longitude', 'latitude'])
+
+    const bussLocation = await BussLocation.create(data)
+
+    return bussLocation
   }
 
   /**

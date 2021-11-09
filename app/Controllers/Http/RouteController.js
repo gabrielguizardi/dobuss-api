@@ -7,6 +7,9 @@
 /**
  * Resourceful controller for interacting with routes
  */
+
+const Routes = use('App/Models/Buss')
+
 class RouteController {
   /**
    * Show a list of all routes.
@@ -18,6 +21,9 @@ class RouteController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const routes = await Routes.all()
+
+    return routes
   }
 
   /**
@@ -41,6 +47,11 @@ class RouteController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.only(['model', 'brand', 'plate'])
+
+    const route = await Routes.create(data)
+
+    return route
   }
 
   /**
@@ -53,6 +64,9 @@ class RouteController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const route = await Routes.findOrFail(params.id)
+
+    return route
   }
 
   /**
