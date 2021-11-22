@@ -5,6 +5,24 @@ const Route = use('Route')
 
 /* Onibus */
 
-Route.resource('busses', 'BussController').apiOnly()
-Route.resource('busses/locations', 'BussLocationController').apiOnly()
-Route.resource('routes', 'RouteController').apiOnly()
+Route.get('busses', 'BussController.index')
+Route.get('busses/:id', 'BussController.show')
+Route.post('busses', 'BussController.create')
+Route.put('busses/:id', 'BussController.update')
+Route.delete('busses/:id', 'BussController.destroy')
+
+/* Localização Onibus */
+
+Route.get('busses/:bussId/location', 'BussLocationController.show')
+Route.post('busses/:bussId/locations', 'BussLocationController.create')
+
+/* Pontos de onibus */
+
+Route.get('buss-stops', 'BussStopController.index')
+Route.post('buss-stops', 'BussStopController.create')
+Route.delete('buss-stops/:id', 'BussStopController.destroy')
+
+/* Pontos de onibus */
+
+Route.get('routes', 'RouteController.index')
+Route.post('routes', 'RouteController.create')

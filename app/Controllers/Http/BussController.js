@@ -1,8 +1,7 @@
 'use strict'
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/framework/src/Params')} Params */
 
 /**
  * Resourceful controller for interacting with busses
@@ -11,41 +10,20 @@ const Buss = use('App/Models/Buss')
 
 class BussController {
   /**
-   * Show a list of all busses.
-   * GET busses
-   *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
+    // const busses = await Database.table('busses').innerJoin('routes', 'busses.id', 'routes.buss_id')
     const busses = await Buss.all()
 
     return busses
   }
 
   /**
-   * Render a form to be used for creating a new buss.
-   * GET busses/create
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new buss.
-   * POST busses
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response, auth }) {
+  async create ({ request }) {
     const data = request.only(['model', 'brand', 'plate'])
 
     const buss = await Buss.create(data)
@@ -54,52 +32,38 @@ class BussController {
   }
 
   /**
-   * Display a single buss.
-   * GET busses/:id
-   *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Params} ctx.params
    */
-  async show ({ params, request, response, view }) {
-    const buss = await Buss.findOrFail(params.id)
+  async show ({ params: { id } }) {
+    const buss = await Buss.findOrFail(id)
 
     return buss
   }
 
   /**
-   * Render a form to update an existing buss.
-   * GET busses/:id/edit
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Params} ctx.params
    */
-  async edit ({ params, request, response, view }) {
+  async update ({ params: { id }, request }) {
+    const data = request.only(['model', 'brand', 'plate'])
+
+    const buss = await Buss.findOrFail(id)
+    buss.merge(data)
+    await buss.save()
+
+    return buss
   }
 
   /**
-   * Update buss details.
-   * PUT or PATCH busses/:id
-   *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
+   * @param {Params} ctx.params
    */
-  async update ({ params, request, response }) {
-  }
+  async destroy ({ params: { id } }) {
+    const buss = await Buss.findOrFail(id)
 
-  /**
-   * Delete a buss with id.
-   * DELETE busses/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await buss.delete()
   }
 }
 

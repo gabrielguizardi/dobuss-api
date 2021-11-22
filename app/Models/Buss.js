@@ -9,7 +9,7 @@ class Buss extends Model {
   }
 
   routes () {
-    return this.hasMany('App/Model/Routes')
+    return this.hasMany('App/Model/Route')
   }
 }
 

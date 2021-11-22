@@ -1,106 +1,75 @@
 'use strict'
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
  * Resourceful controller for interacting with routes
  */
 
-const Routes = use('App/Models/Buss')
+const Route = use('App/Models/Route')
+const RoutesBussStop = use('App/Models/RoutesBussStop')
 
 class RouteController {
   /**
-   * Show a list of all routes.
-   * GET routes
-   *
    * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-    const routes = await Routes.all()
+  async index () {
+    const routes = await Route.all()
 
     return routes
   }
 
   /**
-   * Render a form to be used for creating a new route.
-   * GET routes/create
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
-  }
+  async create ({ request }) {
+    const data = request.only(['buss_id', 'stops'])
 
-  /**
-   * Create/save a new route.
-   * POST routes
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-    const data = request.only(['model', 'brand', 'plate'])
+    const route = await Route.create({ buss_id: data.buss_id })
 
-    const route = await Routes.create(data)
+    Promise.all(
+      data.stops.map(async (stop, index) => {
+        await RoutesBussStop.create({
+          buss_stop_id: stop,
+          route_id: route.id,
+          sequence: index + 1
+        })
+      })
+    )
 
     return route
   }
 
   /**
-   * Display a single route.
-   * GET routes/:id
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-    const route = await Routes.findOrFail(params.id)
+  async show ({ params, request }) {
+    const route = await Route.findOrFail(params.id)
 
     return route
   }
 
   /**
-   * Render a form to update an existing route.
-   * GET routes/:id/edit
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
+  async edit ({ params, request }) {
   }
 
   /**
-   * Update route details.
-   * PUT or PATCH routes/:id
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
   }
 
   /**
-   * Delete a route with id.
-   * DELETE routes/:id
-   *
    * @param {object} ctx
    * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, request }) {
   }
 }
 
