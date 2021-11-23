@@ -24,5 +24,7 @@ Route.delete('buss-stops/:id', 'BussStopController.destroy')
 
 /* Pontos de onibus */
 
-Route.get('routes', 'RouteController.index')
+Route.get('buss-stops/:bussStopId/routes', 'RouteController.index')
+Route.get('routes/:id', 'RouteController.show')
 Route.post('routes', 'RouteController.create')
+Route.post('routes/:id', 'RouteController.destroy')

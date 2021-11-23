@@ -14,7 +14,7 @@ class BussController {
    */
   async index () {
     // const busses = await Database.table('busses').innerJoin('routes', 'busses.id', 'routes.buss_id')
-    const busses = await Buss.all()
+    const busses = await Buss.query().with('routes').fetch()
 
     return busses
   }

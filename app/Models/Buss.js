@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Buss extends Model {
   bussLocations () {
-    return this.hasMany('App/Model/BussLocation')
+    return this.hasMany('App/Models/BussLocation')
   }
 
   routes () {
-    return this.hasMany('App/Model/Route')
+    return this.hasMany('App/Models/Route')
   }
 }
 

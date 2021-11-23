@@ -8,15 +8,18 @@
 
 const Route = use('App/Models/Route')
 const RoutesBussStop = use('App/Models/RoutesBussStop')
+const BussStop = use('App/Models/BussStop')
 
 class RouteController {
   /**
    * @param {object} ctx
    */
-  async index () {
-    const routes = await Route.all()
+  async index ({ params: { bussStopId } }) {
+    const bussStop = await BussStop.findOrFail(bussStopId)
 
-    return routes
+    const routesBussStops = await bussStop.routes().pivotQuery().with('route').with('route.buss').fetch()
+
+    return routesBussStops.toJSON().map((routesBussStop) => routesBussStop.route)
   }
 
   /**
@@ -43,33 +46,29 @@ class RouteController {
 
   /**
    * @param {object} ctx
-   * @param {Request} ctx.request
+   * @param {Params} ctx.params
    */
-  async show ({ params, request }) {
-    const route = await Route.findOrFail(params.id)
+  async show ({ params: { id } }) {
+    const route = await Route.findOrFail(id)
 
-    return route
+    const bussStops = await route.bussStops().fetch()
+    const buss = await route.buss().fetch()
+
+    return {
+      ...route.toJSON(),
+      buss,
+      buss_stops: bussStops
+    }
   }
 
   /**
    * @param {object} ctx
    * @param {Request} ctx.request
    */
-  async edit ({ params, request }) {
-  }
+  async destroy ({ params: { id } }) {
+    const route = await Route.findOrFail(id)
 
-  /**
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   */
-  async update ({ params, request }) {
-  }
-
-  /**
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   */
-  async destroy ({ params, request }) {
+    return await route.delete()
   }
 }
 

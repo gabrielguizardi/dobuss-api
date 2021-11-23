@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Route extends Model {
   buss () {
-    this.belongsTo('App/Model/Buss')
+    return this.belongsTo('App/Models/Buss')
   }
 
   bussStops () {
-    this.hasMany('App/Model/RoutesBussStop')
+    return this.belongsToMany('App/Models/BussStop').pivotModel('App/Models/RoutesBussStop')
   }
 }
 

@@ -9,7 +9,7 @@ class BussLocationSchema extends Schema {
       table.increments('id')
       table.string('latitude', 20)
       table.string('longitude', 20)
-      table.integer('buss_id').unsigned().references('id').inTable('busses')
+      table.integer('buss_id').unsigned().references('id').inTable('busses').onUpdate('CASCADE').onDelete('SET NULL')
       table.timestamps()
     })
   }

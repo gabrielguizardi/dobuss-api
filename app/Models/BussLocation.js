@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class BussLocation extends Model {
   buss () {
-    return this.belongsTo('App/Model/Buss')
+    return this.belongsTo('App/Models/Buss')
   }
 }
 

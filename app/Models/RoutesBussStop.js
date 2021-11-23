@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class RoutesBussStop extends Model {
   route () {
-    this.belongsTo('App/Model/Route')
+    return this.belongsTo('App/Models/Route')
   }
 
   bussStop () {
-    this.belongsTo('App/Model/BussStop')
+    return this.belongsTo('App/Models/BussStop')
   }
 }
 
